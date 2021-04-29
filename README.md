@@ -15,3 +15,11 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 # flutter-location
+Support android 9 or higher
+Used package
+- location: ^4.1.1
+- url_launcher: ^6.0.3
+- http: ^0.13.2
+- platform_device_id: ^1.0.1
+- bloc: ^7.0.0
+- equatable: ^2.0.0
