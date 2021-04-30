@@ -30,7 +30,7 @@
 .pub-cache/
 .pub/
 /build/
-/lib/logic/repository/
+/lib/logic/repository/location_repository.dart
 # Web related
 lib/generated_plugin_registrant.dart
 
