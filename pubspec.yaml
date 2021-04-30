@@ -34,7 +34,9 @@ dependencies:
   platform_device_id: ^1.0.1
   bloc: ^7.0.0
   equatable: ^2.0.0
-
+  flutter_bloc: ^7.0.0
+  geocoding: ^2.0.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

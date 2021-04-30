@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_location/logic/repository/location_repository.dart';
 import 'package:location/location.dart';
 
 class ListenLocationWidget extends StatefulWidget {
@@ -26,8 +25,6 @@ class _ListenLocationState extends State<ListenLocationWidget> {
       });
       _locationSubscription.cancel();
     }).listen((LocationData currentLocation) {
-      LocationRepository().createLogLocation(currentLocation);
-      print(currentLocation);
       setState(() {
         _error = null;
 

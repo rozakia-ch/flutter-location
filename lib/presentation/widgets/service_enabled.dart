@@ -40,7 +40,7 @@ class _ServiceEnabledState extends State<ServiceEnabledWidget> {
         Text('Service enabled: ${_serviceEnabled ?? "unknown"}',
             style: Theme.of(context).textTheme.bodyText1),
         Row(
-          children: <Widget>[
+          children: [
             Container(
               margin: const EdgeInsets.only(right: 42),
               child: ElevatedButton(
