@@ -17,11 +17,11 @@ samples, guidance on mobile development, and a full API reference.
 # flutter-location
 Support android 9 or higher.
 Used package
-- [location: ^4.1.1](https://flutter.dev/docs/get-started/codelab)
-- [url_launcher: ^6.0.3](https://flutter.dev/docs/get-started/codelab)
-- [http: ^0.13.2](https://flutter.dev/docs/get-started/codelab)
-- [platform_device_id: ^1.0.1](https://flutter.dev/docs/get-started/codelab)
-- [bloc: ^7.0.0](https://flutter.dev/docs/get-started/codelab)
-- [equatable: ^2.0.0](https://flutter.dev/docs/get-started/codelab)
-- [flutter_bloc: ^7.0.0](https://flutter.dev/docs/get-started/codelab)
-- [geocoding: ^2.0.0](https://flutter.dev/docs/get-started/codelab)
+- [location: ^4.1.1](https://pub.dev/packages/location)
+- [url_launcher: ^6.0.3](https://pub.dev/packages/url_launcher)
+- [http: ^0.13.2](https://pub.dev/packages/http)
+- [platform_device_id: ^1.0.1](https://pub.dev/packages/platform_device_id)
+- [bloc: ^7.0.0](https://pub.dev/packages/bloc)
+- [equatable: ^2.0.0](https://pub.dev/packages/equatable)
+- [flutter_bloc: ^7.0.0](https://pub.dev/packages/flutter_bloc)
+- [geocoding: ^2.0.0](https://pub.dev/packages/geocoding)
