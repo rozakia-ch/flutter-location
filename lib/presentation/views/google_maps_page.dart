@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_location/logic/cubit/location_cubit.dart';
 import 'package:flutter_location/logic/models/pin_information.dart';
 import 'package:flutter_location/presentation/widgets/drawer_app.dart';
 import 'package:flutter_location/presentation/widgets/map_pin_info.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -20,14 +23,37 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   bool _showInfo = false;
   PinInformation? _selectedPin;
   PinInformation? _sourcePinInfo;
+  // for my drawn routes on the map
+
+  Map<PolylineId, Polyline> _polylines = {};
+  List<LatLng> _polylineCoordinates = [];
+  PolylinePoints _polylinePoints = PolylinePoints();
+  String _googleApiKey = 'YouApiKey';
+
   static final CameraPosition _initialCameraPosition = CameraPosition(
     target: LatLng(0, 0),
     zoom: 16,
   );
 
-  void _onMapCreated(GoogleMapController controller) {
+  void _onMapCreated(GoogleMapController controller) async {
     this._controller = controller;
-    if (_controller != null) _initialLocation();
+    if (_controller != null) {
+      LocationData _locationData = await _location.getLocation();
+      double _latitudeDestination = _locationData.latitude! + sin(1 * pi / 6.0) / 20.0;
+      double _longitudeDestination = _locationData.longitude! + cos(1 * pi / 6.0) / 20.0;
+      PointLatLng _origin = PointLatLng(_locationData.latitude!, _locationData.longitude!);
+      PointLatLng _destination = PointLatLng(_latitudeDestination, _longitudeDestination);
+      _destinationMarker(latitude: _latitudeDestination, longitude: _longitudeDestination);
+      _setPolylines(origin: _origin, destination: _destination);
+      _controller!.animateCamera(
+        CameraUpdate.newCameraPosition(
+          new CameraPosition(
+            target: LatLng(_locationData.latitude!, _locationData.longitude!),
+            zoom: 18.00,
+          ),
+        ),
+      );
+    }
   }
 
   void _initialLocation() async {
@@ -65,6 +91,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                 initialCameraPosition: _initialCameraPosition,
                 onMapCreated: _onMapCreated,
                 markers: Set<Marker>.of(_markers.values),
+                polylines: Set<Polyline>.of(_polylines.values),
                 mapToolbarEnabled: false,
                 zoomControlsEnabled: false,
                 onTap: (LatLng location) {
@@ -122,16 +149,62 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       icon: BitmapDescriptor.defaultMarkerWithHue(
         BitmapDescriptor.hueGreen,
       ),
-      onTap: () {
-        setState(() {
-          _showInfo = true;
-          _selectedPin = _sourcePinInfo;
-        });
-      },
+      onTap: () => setState(() {
+        _showInfo = true;
+        _selectedPin = _sourcePinInfo;
+      }),
     );
     setState(() {
       _markers[_markerId] = marker;
     });
+  }
+
+  void _destinationMarker({double? latitude, double? longitude}) {
+    final LatLng _latlng = LatLng(latitude!, longitude!);
+    _sourcePinInfo = PinInformation(
+      locationName: "Your Location",
+      location: _latlng,
+      locationAddress: "destination",
+      pinPath: "assets/driving_pin.png",
+      avatarPath: "assets/friend1.jpg",
+      labelColor: Colors.blueAccent,
+    );
+    final String _markerIdVal = 'marker_id_destination';
+    final MarkerId _markerId = MarkerId(_markerIdVal);
+    final Marker marker = Marker(
+      markerId: _markerId,
+      position: _latlng,
+      draggable: false,
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueBlue,
+      ),
+      onTap: () => setState(() {
+        _showInfo = true;
+        _selectedPin = _sourcePinInfo;
+      }),
+    );
+    setState(() {
+      _markers[_markerId] = marker;
+    });
+  }
+
+  void _setPolylines({required PointLatLng origin, required PointLatLng destination}) async {
+    PolylineResult result = await _polylinePoints.getRouteBetweenCoordinates(
+      _googleApiKey,
+      origin,
+      destination,
+      travelMode: TravelMode.driving,
+      avoidHighways: true,
+      optimizeWaypoints: true,
+    );
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        _polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+    PolylineId id = PolylineId("poly");
+    Polyline polyline = Polyline(polylineId: id, color: Colors.red, points: _polylineCoordinates);
+    _polylines[id] = polyline;
   }
 
   @override

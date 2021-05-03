@@ -4,7 +4,7 @@ import 'package:platform_device_id/platform_device_id.dart';
 
 class LocationRepository {
   Future createLogLocation(position) async {
-    final String apiURL = 'http://kartolo.karibiya.my.id:2523';
+    final String apiURL = 'YOUR_API_URL';
     String? deviceId = await PlatformDeviceId.getDeviceId;
     try {
       var request = await http.post(
