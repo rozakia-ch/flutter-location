@@ -15,7 +15,7 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 # flutter-location
-Support android 9 or higher.
+Support background service.
 Used package
 - [location: ^4.1.1](https://pub.dev/packages/location)
 - [url_launcher: ^6.0.3](https://pub.dev/packages/url_launcher)
@@ -31,7 +31,8 @@ Used package
    <tr>
     <td><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
     <td><img src="apk/Screenshot_2.jpg" width=270 height=480></td>
-    <td><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
+    <td><img src="apk/Screenshot_3.jpg" width=270 height=480></td>
+    <td><img src="apk/Screenshot_4.jpg" width=270 height=480></td>
   </tr>
  </table>
-
+<a href="https://github.com/rozakia-ch/flutter-location/raw/main/apk/app-release.apk">Download APK</a>
