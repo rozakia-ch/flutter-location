@@ -29,10 +29,10 @@ Used package
 - [flutter_polyline_points: ^1.0.0](https://pub.dev/packages/flutter_polyline_points)
 <table>
    <tr>
-    <td><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
-    <td><img src="apk/Screenshot_2.jpg" width=270 height=480></td>
-    <td><img src="apk/Screenshot_3.jpg" width=270 height=480></td>
-    <td><img src="apk/Screenshot_4.jpg" width=270 height=480></td>
+    <td><img src="apk/Screenshot_1.jpg" width=250 height=400></td>
+    <td><img src="apk/Screenshot_2.jpg" width=250 height=400></td>
+    <td><img src="apk/Screenshot_3.jpg" width=250 height=400></td>
+    <td><img src="apk/Screenshot_4.jpg" width=250 height=400></td>
   </tr>
  </table>
 <a href="https://github.com/rozakia-ch/flutter-location/raw/main/apk/app-release.apk">Download APK</a>
