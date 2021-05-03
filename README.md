@@ -35,4 +35,4 @@ Used package
     <td><img src="apk/Screenshot_4.jpg" width=270 height=480></td>
   </tr>
  </table>
-<a href="apk/app-release.apk">Download APK</a>
+<a href="https://github.com/rozakia-ch/flutter-location/raw/main/apk/app-release.apk">Download APK</a>
