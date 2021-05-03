@@ -30,7 +30,7 @@ Used package
 <table>
    <tr>
     <td><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
-    <td><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
+    <td><img src="apk/Screenshot_2.jpg" width=270 height=480></td>
     <td><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
   </tr>
  </table>
