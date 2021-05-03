@@ -35,4 +35,4 @@ Used package
     <td><img src="apk/Screenshot_4.jpg" width=270 height=480></td>
   </tr>
  </table>
-<a href="apk/apk-release.apk"><button type="button" onclick="alert('Hello world!')">Download APK</button></a>
+<a href="apk/app-release.apk">ownload APK</a>
