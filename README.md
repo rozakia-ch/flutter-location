@@ -27,11 +27,11 @@ Used package
 - [geocoding: ^2.0.0](https://pub.dev/packages/geocoding)
 - [google_maps_flutter: ^2.0.3](https://pub.dev/packages/google_maps_flutter)
 - [flutter_polyline_points: ^1.0.0](https://pub.dev/packages/flutter_polyline_points)
-<table style="border: none;">
-   <tr style="border: none;">
-    <td style="border: none;"><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
-    <td style="border: none;"><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
-    <td style="border: none;"><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
+<table>
+   <tr>
+    <td><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
+    <td><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
+    <td><img src="apk/Screenshot_1.jpg" width=270 height=480></td>
   </tr>
  </table>
 
