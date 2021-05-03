@@ -28,4 +28,5 @@ Used package
 - [google_maps_flutter: ^2.0.3](https://pub.dev/packages/google_maps_flutter)
 - [flutter_polyline_points: ^1.0.0](https://pub.dev/packages/flutter_polyline_points)
 
-![Test Image 6](apk/Screenshot_1.jpg)
+![Screenshot_1](apk/Screenshot_1.jpg)
+![Screenshot_2](apk/Screenshot_1.jpg)
