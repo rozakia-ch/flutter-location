@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_location/logic/cubit/location_cubit.dart';
 import 'package:flutter_location/logic/models/pin_information.dart';
+import 'package:flutter_location/logic/repository/location_repository.dart';
 import 'package:flutter_location/presentation/widgets/drawer_app.dart';
 import 'package:flutter_location/presentation/widgets/map_pin_info.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -22,7 +23,6 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
   bool _showInfo = false;
   PinInformation? _selectedPin;
-  PinInformation? _sourcePinInfo;
   // for my drawn routes on the map
 
   Map<PolylineId, Polyline> _polylines = {};
@@ -132,7 +132,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   void _updateMarker({required LocationData locationData, String? address}) {
     final LatLng _latlng = LatLng(locationData.latitude!, locationData.longitude!);
-    _sourcePinInfo = PinInformation(
+    PinInformation _destinationPinInfo = PinInformation(
       locationName: "Your Location",
       location: _latlng,
       locationAddress: address,
@@ -151,7 +151,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       ),
       onTap: () => setState(() {
         _showInfo = true;
-        _selectedPin = _sourcePinInfo;
+        _selectedPin = _destinationPinInfo;
       }),
     );
     setState(() {
@@ -159,12 +159,14 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     });
   }
 
-  void _destinationMarker({double? latitude, double? longitude}) {
+  Future<void> _destinationMarker({double? latitude, double? longitude}) async {
+    String _address =
+        await LocationRepository().getAddress(latitude: latitude, longitude: longitude);
     final LatLng _latlng = LatLng(latitude!, longitude!);
-    _sourcePinInfo = PinInformation(
-      locationName: "Your Location",
+    PinInformation _sourcePinInfo = PinInformation(
+      locationName: "Destination",
       location: _latlng,
-      locationAddress: "destination",
+      locationAddress: _address,
       pinPath: "assets/driving_pin.png",
       avatarPath: "assets/friend1.jpg",
       labelColor: Colors.blueAccent,

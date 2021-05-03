@@ -12,6 +12,7 @@ class _LocationPageState extends State<LocationPage> {
   LocationCubit _locationCubit = LocationCubit();
   double? _latitude, _longitude;
   String? _accuracy = "0", _address = "";
+  final TextStyle textStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -30,43 +31,57 @@ class _LocationPageState extends State<LocationPage> {
               _address = state.address;
             }
 
-            return ListView(
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Address: "),
-                    SizedBox(width: 10),
-                    Expanded(child: Text(_address!)),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Latitude: "),
-                    Text(_latitude.toString()),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Longitude: "),
-                    Text(_longitude.toString()),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Accuracy: "),
-                    Text(_accuracy!),
-                  ],
-                ),
-                ElevatedButton(
-                  onPressed: () => _locationCubit.close(),
-                  child: Text("Stop Listen"),
-                ),
-              ],
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/pin.png",
+                    fit: BoxFit.fitWidth,
+                    width: 150,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(_address!, textAlign: TextAlign.center, style: textStyle),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Latitude: ',
+                      style: DefaultTextStyle.of(context).style.copyWith(fontSize: 18),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: _latitude.toString(),
+                          style: textStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Longitude: ',
+                      style: DefaultTextStyle.of(context).style.copyWith(fontSize: 18),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: _longitude.toString(),
+                          style: textStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Accuracy: ',
+                      style: DefaultTextStyle.of(context).style.copyWith(fontSize: 18),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: _accuracy,
+                          style: textStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             );
           },
         ),
