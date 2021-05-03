@@ -1,9 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_location/logic/cubit/location_cubit.dart';
-import 'package:flutter_location/presentation/methods/app_method.dart';
 import 'package:flutter_location/presentation/widgets/drawer_app.dart';
-import 'package:location/location.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LocationPage extends StatefulWidget {
@@ -12,50 +9,19 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
-  final Location location = Location();
-  final LocationCubit _locationCubit = LocationCubit();
-
-  @override
-  void initState() {
-    _checkPermissions();
-    _checkBackgroundMode();
-    location.changeNotificationOptions(
-      channelName: "Location background service",
-      title: "Location background service",
-      subtitle: "Location background service is running",
-      iconName: "location",
-    );
-    super.initState();
-  }
-
-  Future<void> _checkPermissions() async {
-    PermissionStatus _permission = await location.hasPermission();
-    if (_permission != PermissionStatus.granted) await location.requestPermission();
-  }
-
-  Future<void> _checkBackgroundMode() async {
-    final bool result = await location.isBackgroundModeEnabled();
-    if (!result) await location.enableBackgroundMode(enable: true);
-  }
-
+  LocationCubit _locationCubit = LocationCubit();
   double? _latitude, _longitude;
   String? _accuracy = "0", _address = "";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: DrawerApp(),
-      appBar: AppBar(
-        title: Text("Location Stream Bloc"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            onPressed: () => AppMethod().showInfoDialog(context),
-          )
-        ],
-      ),
-      body: BlocProvider(
-        create: (context) => _locationCubit,
-        child: BlocBuilder<LocationCubit, LocationState>(
+    return BlocProvider(
+      create: (context) => _locationCubit,
+      child: Scaffold(
+        drawer: DrawerApp(),
+        appBar: AppBar(
+          title: Text("Location Stream Bloc"),
+        ),
+        body: BlocBuilder<LocationCubit, LocationState>(
           builder: (context, state) {
             if (state is LocationLoaded) {
               _latitude = state.locationData!.latitude;
@@ -96,6 +62,10 @@ class _LocationPageState extends State<LocationPage> {
                     Text(_accuracy!),
                   ],
                 ),
+                ElevatedButton(
+                  onPressed: () => _locationCubit.close(),
+                  child: Text("Stop Listen"),
+                ),
               ],
             );
           },
@@ -106,8 +76,8 @@ class _LocationPageState extends State<LocationPage> {
 
   @override
   dispose() {
-    super.dispose();
-    location.enableBackgroundMode(enable: false);
     _locationCubit.close();
+    print("Disposing Location Page");
+    super.dispose();
   }
 }

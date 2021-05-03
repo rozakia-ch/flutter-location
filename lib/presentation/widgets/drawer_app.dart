@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_location/presentation/views/home_page.dart';
 import 'package:flutter_location/presentation/views/location_page.dart';
+import 'package:flutter_location/presentation/views/google_maps_page.dart';
 
 class DrawerApp extends StatelessWidget {
   @override
@@ -17,8 +18,8 @@ class DrawerApp extends StatelessWidget {
           _createDrawerItem(
             icon: Icons.contacts,
             text: 'Location',
-            onTap: () => Navigator.pushAndRemoveUntil(
-                context, MaterialPageRoute(builder: (context) => MyHomePage()), (route) => false),
+            onTap: () => Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => MyHomePage())),
           ),
           _createDrawerItem(
             icon: Icons.event,
@@ -26,6 +27,14 @@ class DrawerApp extends StatelessWidget {
             onTap: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => LocationPage()),
+            ),
+          ),
+          _createDrawerItem(
+            icon: Icons.map,
+            text: 'Google Map',
+            onTap: () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => GoogleMapsPage()),
             ),
           ),
         ],

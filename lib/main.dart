@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_location/presentation/views/home_page.dart';
+
+import 'logic/cubit/location_cubit.dart';
 
 void main() {
   runApp(MyApp());

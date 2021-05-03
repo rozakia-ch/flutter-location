@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -10,32 +9,53 @@ part 'location_state.dart';
 
 class LocationCubit extends Cubit<LocationState> {
   // ignore: cancel_subscriptions
-  StreamSubscription? locationStreamSubscription;
-  final Location? location = Location();
-
-  LocationData? locationData;
+  late StreamSubscription<LocationData> _locationSubscription;
+  final Location _location = Location();
+  final LocationRepository _locationRepository = LocationRepository();
   LocationCubit() : super(LocationInitial()) {
+    _checkPermissions();
     locationStream();
   }
-  StreamSubscription<LocationData> locationStream() {
-    location!.changeSettings(interval: 10000);
-    return locationStreamSubscription = location!.onLocationChanged.handleError((dynamic err) {
-      locationStreamSubscription!.cancel();
+
+  Future<void> locationStream() async {
+    _location.changeSettings(interval: 5000);
+    Future.delayed(const Duration(milliseconds: 1000), () => _checkBackgroundMode());
+    _locationSubscription = _location.onLocationChanged.handleError((dynamic err) {
+      _locationSubscription.cancel();
     }).listen((LocationData currentLocation) {
-      setLocation(currentLocation);
+      _listenLocation(currentLocation);
     });
   }
 
-  Future<void> setLocation(currentLocation) async {
-    String? address = await LocationRepository()
-        .getAddress(latitude: currentLocation.latitude, longitude: currentLocation.longitude);
-    await LocationRepository().createLogLocation(currentLocation);
+  void _listenLocation(currentLocation) async {
+    String? address = await _locationRepository.getAddress(
+      latitude: currentLocation.latitude,
+      longitude: currentLocation.longitude,
+    );
+    await _locationRepository.createLogLocation(currentLocation);
     emit(LocationLoaded(locationData: currentLocation, address: address));
   }
 
+  void _checkPermissions() async {
+    PermissionStatus _permission = await _location.hasPermission();
+    if (_permission != PermissionStatus.granted) await _location.requestPermission();
+  }
+
+  void _checkBackgroundMode() async {
+    final bool result = await _location.isBackgroundModeEnabled();
+    if (!result) await _location.enableBackgroundMode(enable: true);
+    _location.changeNotificationOptions(
+      channelName: "Location background service",
+      title: "Location background service",
+      subtitle: "Location background service is running",
+      iconName: "location",
+    );
+  }
+
   @override
-  Future<void> close() {
-    locationStreamSubscription!.cancel();
+  Future<void> close() async {
+    _locationSubscription.cancel();
+    _location.enableBackgroundMode(enable: false);
     return super.close();
   }
 }

@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:platform_device_id/platform_device_id.dart';
 
 class LocationRepository {
   Future createLogLocation(position) async {
-    final String apiURL = 'YOURAPIKEY';
+    final String apiURL = 'http://kartolo.karibiya.my.id:2523';
     String? deviceId = await PlatformDeviceId.getDeviceId;
     try {
       var request = await http.post(
@@ -29,7 +28,7 @@ class LocationRepository {
           await placemarkFromCoordinates(latitude!, longitude!).then((value) => value);
       Placemark placeMark = placemarks.first;
       String? street = placeMark.street;
-      String? name = placeMark.name;
+      // String? name = placeMark.name;
       String? subLocality = placeMark.subLocality;
       String? locality = placeMark.locality;
       String? subAdministrativeArea = placeMark.subAdministrativeArea;
